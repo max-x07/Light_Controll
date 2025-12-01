@@ -1,0 +1,50 @@
+// Pin setup
+int joyX = A0;   // Joystick X-axis (left/right)
+int joyY = A1;   // Joystick Y-axis (up/down)
+int button = 2;  //button (optional)
+
+int redPin = 3;   // Red LED (up)
+int greenPin = 4; // Green LED (down)
+int bluePin = 5;  // Blue LED (left)
+int yellowPin = 6; // Yellow LED (right)
+
+void setup() {
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+  pinMode(yellowPin, OUTPUT);
+
+  pinMode(button, INPUT); //optional
+}
+
+void loop() {
+  int x = analogRead(joyX);  // Read joystick X-axis
+  int y = analogRead(joyY);  // Read joystick Y-axis
+
+  // Reset LEDs
+  digitalWrite(redPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(bluePin, LOW);
+  digitalWrite(yellowPin, LOW);
+
+  // Left (VRx < 400)
+  if (x < 400) {
+    digitalWrite(redPin, HIGH);  // Turn on red LED
+  }
+  // Right (VRx > 600)
+  else if (x > 600) {
+    digitalWrite(greenPin, HIGH);  // Turn on green LED
+  }
+
+  // Up (VRy > 600)
+  if (y > 600) {
+    digitalWrite(bluePin, HIGH);  // Turn on blue LED
+  }
+  // Down (VRy > 400)
+  else if (y < 400) {
+    digitalWrite(yellowPin, HIGH);  // Turn on yellow LED
+  }
+
+  // small delay
+  delay(100);
+}
